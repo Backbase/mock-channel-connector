@@ -1,0 +1,56 @@
+server:
+  port: 8080
+
+management:
+  health:
+    jms:
+      enabled: false
+
+eureka:
+  client:
+    enabled: false
+    serviceUrl:
+      defaultZone: http://registry:8080/eureka
+
+# must be lower than hikari maximum pool size
+backbase:
+  security:
+    public:
+      paths: /websocket/**
+  multi-tenancy:
+    datasource:
+      strategy: none
+  mock:
+    workers: 3
+
+spring:
+  main:
+    banner-mode: off
+  activemq:
+    broker-url: tcp://localhost:61616?jms.useAsyncSend=true&jms.optimizeAcknowledge=true
+    user: admin
+    password: admin
+  cloud:
+    stream:
+      default:
+        group: mock
+        content-type: application/json
+        consumer.exchangeDurable: true
+        consumer.concurrency: 1
+        consumer.prefetch: 1000
+        consumer.autoCommitOnError: false
+        consumer.max-attempts: 5
+        consumer.backOffInitialInterval: 2000
+        consumer.backOffMaxInterval: 60000
+        consumer.backOffMutliplier: 2.0
+        consumer.default-retryable: true
+      default-binder: activemq
+      function:
+        definition: commLowPriority;commMediumPriority;commHighPriority
+      bindings:
+        commLowPriority-in-0:
+          destination: Backbase.communication.push-low-priority,Backbase.communication.notifications-low-priority,Backbase.communication.message-center-low-priority,Backbase.communication.sms-low-priority,Backbase.communication.email-low-priority
+        commMediumPriority-in-0:
+          destination: Backbase.communication.push-medium-priority,Backbase.communication.notifications-medium-priority,Backbase.communication.message-center-medium-priority,Backbase.communication.sms-medium-priority,Backbase.communication.email-medium-priority
+        commHighPriority-in-0:
+          destination: Backbase.communication.push-high-priority,Backbase.communication.notifications-high-priority,Backbase.communication.message-center-high-priority,Backbase.communication.sms-high-priority,Backbase.communication.email-high-priority

@@ -1,0 +1,23 @@
+# This is a local env only config, it's not included in the build artifacts
+# Set the working dir for your intellij run configuration to $MODULE_DIR$ and this config will apply
+# Enable local profile
+
+backbase:
+  communication:
+    http:
+      oauth2:
+        enabled: false
+
+eureka.client.enabled: false
+
+spring:
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: false
+
+logging:
+  level:
+    root: info
+    com:
+      backbase: debug
