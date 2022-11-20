@@ -16,7 +16,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <spring-cloud-connector.version>2.0.7.RELEASE</spring-cloud-connector.version>
+        <spring-cloud-connector.version>2.0.9.RELEASE</spring-cloud-connector.version>
         <communication-channel.version>2.1.0-b8</communication-channel.version>
     </properties>
 
