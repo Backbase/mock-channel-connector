@@ -1,0 +1,7 @@
+logging:
+  level:
+    root: INFO
+    com:
+      backbase: DEBUG
+
+eureka.client.enabled: false
