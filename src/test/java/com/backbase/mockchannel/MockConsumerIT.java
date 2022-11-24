@@ -23,6 +23,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.client.RestTemplate;
 import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
  * {@link MockConsumerIT}
@@ -34,6 +36,7 @@ import org.testcontainers.containers.output.Slf4jLogConsumer;
  * @since 23 November 2022
  */
 @Slf4j
+@Testcontainers
 @RequiredArgsConstructor
 @ActiveProfiles({"default", "it"})
 @SpringBootTest(classes = {MockChannelApplication.class})
@@ -42,17 +45,19 @@ class MockConsumerIT {
 
     private final RestTemplate template = new RestTemplate();
 
-    @ClassRule
+    @Container
     public static DockerComposeContainer environment = new DockerComposeContainer(
         new File("src/test/resources/docker-compose.yml"))
         .withExposedService("message-broker", 61616)
         .withExposedService("communication", 8080)
         .withLogConsumer("message-broker", new Slf4jLogConsumer(log))
-        .withLogConsumer("communication", new Slf4jLogConsumer(log));
+        .withLogConsumer("communication", new Slf4jLogConsumer(log))
+        .withLocalCompose(true);
 
     @BeforeAll
     public static void envSetup() {
         System.setProperty("SIG_SECRET_KEY", "JWTSecretKeyDontUseInProduction!");
+        System.setProperty("TESTCONTAINERS_RYUK_DISABLED", "true");
     }
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
