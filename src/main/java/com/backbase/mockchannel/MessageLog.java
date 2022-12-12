@@ -9,6 +9,7 @@ import lombok.Data;
 public class MessageLog {
 
     private String tag;
+    private String trackingId;
     private String channel;
     private int priority;
     private Instant dateSent;

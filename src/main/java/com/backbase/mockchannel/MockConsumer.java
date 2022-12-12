@@ -20,6 +20,7 @@ public class MockConsumer implements Consumer<Message<Map<String,Object>>> {
     public void accept(Message<Map<String,Object>> msg) {
         MessageLog messageLog = new MessageLog(
             (String) msg.getHeaders().get("msgTag"),
+            (String) msg.getHeaders().get("trackingId"),
             (String) msg.getHeaders().get("msgChannel"),
             msg.getHeaders().get("msgPriority", Integer.class),
             Optional.ofNullable(msg.getHeaders().getTimestamp()).map(Instant::ofEpochMilli).orElse(null),
