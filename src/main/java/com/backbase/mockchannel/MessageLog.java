@@ -1,6 +1,7 @@
 package com.backbase.mockchannel;
 
 import java.time.Instant;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,4 +15,5 @@ public class MessageLog {
     private int priority;
     private Instant dateSent;
     private Instant dateDelivered;
+    private Map<String, Object> payload;
 }
