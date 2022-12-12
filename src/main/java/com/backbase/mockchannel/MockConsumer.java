@@ -24,7 +24,8 @@ public class MockConsumer implements Consumer<Message<Map<String,Object>>> {
             (String) msg.getHeaders().get("msgChannel"),
             msg.getHeaders().get("msgPriority", Integer.class),
             Optional.ofNullable(msg.getHeaders().getTimestamp()).map(Instant::ofEpochMilli).orElse(null),
-            Instant.now()
+            Instant.now(),
+            msg.getPayload()
         );
         log.info("Message Received: {}", messageLog);
         this.template.convertAndSend("/topic/message-log", messageLog);
