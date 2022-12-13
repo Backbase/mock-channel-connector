@@ -8,7 +8,7 @@ on:
 jobs:
   release:
     name: Docker Release
-    uses: backbase/workflows/.github/workflows/maven-docker-release.yml@main
+    uses: backbase/workflows/.github/workflows/maven-docker-release.yml@v0.1.0
     with:
       version: ${GITHUB_REF##*v}
     secrets:
