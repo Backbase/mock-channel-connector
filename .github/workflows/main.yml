@@ -9,7 +9,8 @@ on:
 jobs:
   verify:
     name: Maven Verify
-    uses: backbase/workflows/.github/workflows/maven-verify.yml@main
+    uses: backbase/workflows/.github/workflows/maven-verify.yml@feature/semantic-pull-request
     secrets:
       maven-username: ${{ secrets.MAVEN_USERNAME }}
       maven-password: ${{ secrets.MAVEN_PASSWORD }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
