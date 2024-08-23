@@ -31,6 +31,8 @@ spring:
     user: admin
     password: admin
   cloud:
+    function:
+      definition: commLowPriority;commMediumPriority;commHighPriority
     stream:
       default:
         group: mock
@@ -45,8 +47,6 @@ spring:
         consumer.backOffMutliplier: 2.0
         consumer.default-retryable: true
       default-binder: activemq
-      function:
-        definition: commLowPriority;commMediumPriority;commHighPriority
       bindings:
         commLowPriority-in-0:
           destination: Backbase.communication.push-low-priority,Backbase.communication.notifications-low-priority,Backbase.communication.message-center-low-priority,Backbase.communication.sms-low-priority,Backbase.communication.email-low-priority
