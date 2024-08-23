@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpHeaders;
@@ -47,7 +48,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @ContextConfiguration(classes = MockChannelApplication.class, initializers = {MockConsumerIT.Initializer.class})
 class MockConsumerIT {
 
-    private final RestTemplate template = new RestTemplate();
+    private final RestTemplate template = new RestTemplateBuilder()
+        .setConnectTimeout(TIMEOUT)
+        .setReadTimeout(TIMEOUT)
+        .build();
     private static final Duration TIMEOUT = Duration.ofSeconds(300, 0);
 
     @Container
