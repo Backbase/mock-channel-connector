@@ -5,3 +5,7 @@ logging:
       backbase: DEBUG
 
 eureka.client.enabled: false
+
+spring:
+  main:
+    cloud-platform: NONE

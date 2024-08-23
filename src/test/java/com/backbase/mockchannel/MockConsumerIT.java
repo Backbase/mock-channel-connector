@@ -2,6 +2,7 @@ package com.backbase.mockchannel;
 
 import com.backbase.buildingblocks.testutils.TestTokenUtil;
 import java.io.File;
+import java.time.Duration;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.junit.ClassRule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
@@ -23,6 +25,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.client.RestTemplate;
 import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
+import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -37,6 +40,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
  */
 @Slf4j
 @Testcontainers
+@EnableAutoConfiguration
 @RequiredArgsConstructor
 @ActiveProfiles({"default", "it"})
 @SpringBootTest(classes = {MockChannelApplication.class})
@@ -44,15 +48,19 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 class MockConsumerIT {
 
     private final RestTemplate template = new RestTemplate();
+    private static final Duration TIMEOUT = Duration.ofSeconds(300, 0);
 
     @Container
     public static DockerComposeContainer environment = new DockerComposeContainer(
         new File("src/test/resources/docker-compose.yml"))
         .withExposedService("message-broker", 61616)
-        .withExposedService("communication", 8080)
+        .withExposedService("communication", 8080,
+            Wait.forHttp("/").forStatusCode(401)
+                .withReadTimeout(TIMEOUT)
+                .withStartupTimeout(TIMEOUT))
         .withLogConsumer("message-broker", new Slf4jLogConsumer(log))
         .withLogConsumer("communication", new Slf4jLogConsumer(log))
-        .withLocalCompose(true);
+        .withStartupTimeout(TIMEOUT);
 
     @BeforeAll
     public static void envSetup() {
