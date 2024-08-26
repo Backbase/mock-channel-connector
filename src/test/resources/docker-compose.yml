@@ -3,7 +3,7 @@ services:
     image: symptoma/activemq
 
   communication:
-    image: harbor.backbase.eu/staging/communication:2024.08
+    image: repo.backbase.com/backbase-docker-releases/communication:2024.08
     links:
       - message-broker
     environment:
