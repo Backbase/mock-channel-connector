@@ -1,5 +1,6 @@
 //TODO FIXME Pulling communication (repo.backbase.com/docker-releases/communication:2024.08)...
 //TODO FIXME Head "https://repo.backbase.com/v2/docker-releases/communication/manifests/2024.08": unknown: Authentication is required
+//TODO FIXME Get "https://harbor.backbase.eu/v2/": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
 
 package com.backbase.mockchannel;
 
