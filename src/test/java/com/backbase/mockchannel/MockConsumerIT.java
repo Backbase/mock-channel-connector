@@ -1,6 +1,6 @@
 //TODO FIXME Pulling communication (repo.backbase.com/docker-releases/communication:2024.08)...
 //TODO FIXME Head "https://repo.backbase.com/v2/docker-releases/communication/manifests/2024.08": unknown: Authentication is required
-/*
+
 package com.backbase.mockchannel;
 
 import com.backbase.buildingblocks.testutils.TestTokenUtil;
@@ -9,7 +9,6 @@ import java.time.Duration;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.ClassRule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -114,4 +113,4 @@ class MockConsumerIT {
         Assertions.assertEquals(HttpStatus.ACCEPTED, exchange.getStatusCode());
     }
 }
-*/
+
